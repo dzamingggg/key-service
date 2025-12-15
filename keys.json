@@ -1,10 +1,10 @@
 {
-  "DGM1234": {
+  "942N-T8K0-6LTP": {
     "status": "ON",
     "activated_at": null
   },
-  "VIP-111": {
-    "status": "OFF",
+  "DGMTEST": {
+    "status": "ON",
     "activated_at": null
   }
 }
