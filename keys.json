@@ -1,4 +1,10 @@
 {
-  "DGM1234": { "status": "ON" },
-  "VIP-111": { "status": "ON" }
+  "DGM1234": {
+    "status": "ON",
+    "activated_at": null
+  },
+  "VIP-111": {
+    "status": "OFF",
+    "activated_at": null
+  }
 }
