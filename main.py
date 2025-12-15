@@ -5,7 +5,8 @@ app = Flask(__name__)
 
 KEY_DB = "keys.json"
 TOKEN_DB = "tokens.json"
-TOKEN_LIFETIME = 24 * 60 * 60  # 24 tiếng
+KEY_LIFETIME = 24 * 60 * 60  # 24h
+TOKEN_LIFETIME = 24 * 60 * 60
 
 def load_json(path):
     if not os.path.exists(path):
@@ -34,12 +35,27 @@ def check_key():
     if key not in keys:
         return jsonify(success=False, message="KEY_INVALID")
 
-    if keys[key]["status"] != "ON":
+    key_info = keys[key]
+
+    if key_info["status"] != "ON":
         return jsonify(success=False, message="KEY_DISABLED")
 
-    # Tạo token
+    now = int(time.time())
+
+    # 👉 LẦN ĐẦU KÍCH HOẠT
+    if key_info["activated_at"] is None:
+        key_info["activated_at"] = now
+        save_json(KEY_DB, keys)
+
+    # 👉 HẾT HẠN KEY
+    if now - key_info["activated_at"] > KEY_LIFETIME:
+        key_info["status"] = "OFF"
+        save_json(KEY_DB, keys)
+        return jsonify(success=False, message="KEY_EXPIRED")
+
+    # 👉 TẠO TOKEN
     token = secrets.token_hex(16)
-    expire = int(time.time()) + TOKEN_LIFETIME
+    expire = now + TOKEN_LIFETIME
 
     tokens = load_json(TOKEN_DB)
     tokens[token] = {
