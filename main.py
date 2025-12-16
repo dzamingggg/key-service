@@ -33,12 +33,12 @@ def check_key():
     keys = load_json(KEY_DB)
 
     if key not in keys:
-        return jsonify(success=False, message="KEY_INVALID")
+        return jsonify(success=False, message="Key Không Hợp Lệ!")
 
     key_info = keys[key]
 
     if key_info["status"] != "ON":
-        return jsonify(success=False, message="KEY_DISABLED")
+        return jsonify(success=False, message="Key Đã Hết Hạn!")
 
     now = int(time.time())
 
@@ -51,7 +51,7 @@ def check_key():
     if now - key_info["activated_at"] > KEY_LIFETIME:
         key_info["status"] = "OFF"
         save_json(KEY_DB, keys)
-        return jsonify(success=False, message="KEY_EXPIRED")
+        return jsonify(success=False, message="Key Đã Hết Hạn")
 
     # 👉 TẠO TOKEN
     token = secrets.token_hex(16)
