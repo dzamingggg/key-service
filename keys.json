@@ -1,10 +1,10 @@
 {
-  "942N-T8K0-6LTP": {
-    "status": "OFF",
+  "AGRM-VGUE-TWWN": {
+    "status": "ON",
     "activated_at": null
   },
   "ABSN-UXM2-N0GO": {
-    "status": "ON",
+    "status": "OFF",
     "activated_at": null
   }
 }
